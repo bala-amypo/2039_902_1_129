@@ -1,3 +1,7 @@
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
