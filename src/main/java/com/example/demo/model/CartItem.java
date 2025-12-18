@@ -1,19 +1,17 @@
 package com.example.demo.model;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 import jakarta.persistence.*;
+
 @Entity
 public class CartItem {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Cart cart;
-
-    @ManyToOne
-    private Product product;
-
     private Integer quantity;
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 }
