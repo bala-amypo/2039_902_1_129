@@ -1,12 +1,6 @@
-public AuthResponse login(AuthRequest request) {
+package com.example.demo.service;
 
-    User user = userRepository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
+public interface AuthService {
 
-    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-        throw new IllegalArgumentException("Invalid credentials");
-    }
-
-    String token = jwtTokenProvider.generateToken(user.getEmail());
-    return new AuthResponse(token);
+    String login(String username, String password);
 }
