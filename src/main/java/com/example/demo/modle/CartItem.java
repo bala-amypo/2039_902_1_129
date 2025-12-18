@@ -1,15 +1,14 @@
 @Entity
-public class Cart {
+public class CartItem {
 
     @Id @GeneratedValue
     private Long id;
 
-    private Long userId;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    @ManyToOne
+    private Cart cart;
 
-    @PrePersist
-    void create() {
-        createdAt = new Timestamp(System.currentTimeMillis());
-    }
+    @ManyToOne
+    private Product product;
+
+    private Integer quantity;
 }
