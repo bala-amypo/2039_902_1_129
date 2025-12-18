@@ -21,13 +21,10 @@ public class JwtTokenProvider {
         this.secret = secret;
         this.validityInMs = validityInMs;
     }
-
-    // 🔑 Create signing key
     private SecretKey getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    // ✅ Generate JWT token
     public String generateToken(UserDetails userDetails) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + validityInMs);
