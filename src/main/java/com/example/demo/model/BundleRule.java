@@ -11,7 +11,7 @@ public class BundleRule {
     @Column(unique = true)
     private String ruleName;
 
-    private String requiredProducts; // CSV
+    private String requiredProducts;
     private Double discountPercentage;
     private Boolean active = true;
 }
