@@ -1,21 +1,7 @@
-import org.springframework.stereotype.Service;
-import java.util.*;
-import java.math.BigDecimal;
+package com.example.demo.repository;
 
-@Service
-public class CartService {
+import com.example.demo.model.Cart;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    private final CartRepository repo;
-
-    public CartService(CartRepository repo) {
-        this.repo = repo;
-    }
-
-    public Cart createCart(Long userId) {
-        if (repo.findByUserId(userId).isPresent())
-            throw new IllegalArgumentException("Cart already exists");
-        Cart c = new Cart();
-        c.setUserId(userId);
-        return repo.save(c);
-    }
+public interface CartRepository extends JpaRepository<Cart, Long> {
 }
