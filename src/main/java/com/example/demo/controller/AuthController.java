@@ -2,7 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.RegisterRequest;
-import com.example.demo.entity.User;
+import com.example.demo.model.User;
+
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtTokenProvider;
 
