@@ -1,3 +1,6 @@
+import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.demo.security.JwtTokenProvider;
+
 @Service
 public class DiscountService {
 
