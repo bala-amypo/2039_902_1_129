@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.model.DiscountApplication;
-import com.example.demo.repository.DiscountApplicationRepository;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
+
 @Service
 public class DiscountService {
 
@@ -10,7 +11,7 @@ public class DiscountService {
 
         DiscountApplication discount = new DiscountApplication();
         discount.setCartId(cartId);
-        discount.setDiscountAmount(100.0);
+        discount.setDiscountAmount(BigDecimal.valueOf(100));
         discount.setApplied(true);
 
         return discount;

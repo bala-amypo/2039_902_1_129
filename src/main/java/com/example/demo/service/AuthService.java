@@ -8,6 +8,14 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtTokenProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+package com.example.demo.service;
+
+public class AuthService {
+
+    public AuthResponse login(String email, String password) {
+        return new AuthResponse("dummy-jwt-token");
+    }
+}
 
 @Service
 public class AuthService {
@@ -46,3 +54,4 @@ public class AuthService {
         return "User registered successfully";
     }
 }
+

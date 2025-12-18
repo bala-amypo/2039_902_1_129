@@ -14,7 +14,6 @@ public class CartService {
     }
 
     public Cart getCart(Long userId) {
-        return cartRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+        return cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Cart not found"));
     }
 }
