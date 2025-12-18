@@ -1,13 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.repository;
 
 import com.example.demo.model.Cart;
-import com.example.demo.repository.CartRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-@Service
-public class CartService {
+public interface CartRepository extends JpaRepository<Cart, Long> {
 
     private final CartRepository repository;
 
