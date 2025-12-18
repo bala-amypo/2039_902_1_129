@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-
 import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 @Entity
 public class DiscountApplication {

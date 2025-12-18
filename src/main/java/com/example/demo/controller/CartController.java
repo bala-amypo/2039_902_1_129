@@ -1,11 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Cart;
-import com.example.demo.service.CartService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/carts")
 public class CartController {
 
     private final CartService service;

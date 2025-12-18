@@ -1,7 +1,6 @@
-import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+package com.example.demo.model;
 
+import jakarta.persistence.*;
 @Entity
 public class BundleRule {
 
