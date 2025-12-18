@@ -1,9 +1,11 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import com.example.demo.model.CartItem;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.repository.CartItemRepository;
+import org.springframework.stereotype.Service;
 
-public interface CartItemRepository extends JpaRepository<CartItem, Long> {
+@Service
+public class CartItemService {
 
     private final CartItemRepository repository;
 
@@ -11,11 +13,9 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
         this.repository = repository;
     }
 
-    public CartItem save(CartItem item) {
+    public CartItem addItem(Long cartId, Long productId, Integer quantity) {
+        CartItem item = new CartItem();
+        item.setQuantity(quantity);
         return repository.save(item);
-    }
-
-    public List<CartItem> getAll() {
-        return repository.findAll();
     }
 }

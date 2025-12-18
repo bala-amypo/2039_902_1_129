@@ -1,9 +1,13 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import com.example.demo.model.BundleRule;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.repository.BundleRuleRepository;
+import org.springframework.stereotype.Service;
 
-public interface BundleRuleRepository extends JpaRepository<BundleRule, Long> {
+import java.util.List;
+
+@Service
+public class BundleRuleService {
 
     private final BundleRuleRepository repository;
 
@@ -11,7 +15,7 @@ public interface BundleRuleRepository extends JpaRepository<BundleRule, Long> {
         this.repository = repository;
     }
 
-    public BundleRule save(BundleRule rule) {
+    public BundleRule createRule(BundleRule rule) {
         return repository.save(rule);
     }
 

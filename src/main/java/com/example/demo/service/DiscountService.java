@@ -1,10 +1,11 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import com.example.demo.model.DiscountApplication;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.repository.DiscountApplicationRepository;
+import org.springframework.stereotype.Service;
 
-public interface DiscountApplicationRepository
-        extends JpaRepository<DiscountApplication, Long> {
+@Service
+public class DiscountService {
 
     private final DiscountApplicationRepository repository;
 
@@ -12,11 +13,8 @@ public interface DiscountApplicationRepository
         this.repository = repository;
     }
 
-    public DiscountApplication save(DiscountApplication discount) {
-        return repository.save(discount);
-    }
-
-    public List<DiscountApplication> getAll() {
-        return repository.findAll();
+    public DiscountApplication evaluateDiscounts(Long cartId) {
+        DiscountApplication da = new DiscountApplication();
+        return repository.save(da);
     }
 }

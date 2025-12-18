@@ -4,7 +4,7 @@ import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -15,11 +15,11 @@ public class ProductService {
         this.repository = repository;
     }
 
-    public Product save(Product product) {
+    public Product createProduct(Product product) {
         return repository.save(product);
     }
 
-    public List<Product> getAll() {
-        return repository.findAll();
+    public Optional<Product> getProductById(Long id) {
+        return repository.findById(id);
     }
 }
