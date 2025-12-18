@@ -1,15 +1,14 @@
 package com.example.demo.dto;
 
-public class AuthRequest {
+public class AuthResponse {
 
-    private String email;
-    private String password;
+    private String token;
 
-    public String getEmail() {
-        return email;
+    public AuthResponse(String token) {
+        this.token = token;
     }
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
 }

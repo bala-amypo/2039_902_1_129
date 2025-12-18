@@ -1,8 +1,7 @@
 package com.example.demo.model;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 public class DiscountApplication {
@@ -11,39 +10,20 @@ public class DiscountApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Cart cart;
-
-    @ManyToOne
-    private BundleRule bundleRule;
-
+    private Long cartId;
     private BigDecimal discountAmount;
-
-    private Timestamp appliedAt;
-
-    @PrePersist
-    public void onApply() {
-        appliedAt = new Timestamp(System.currentTimeMillis());
-    }
+    private boolean applied;
 
     public Long getId() {
         return id;
     }
 
-    public Cart getCart() {
-        return cart;
+    public Long getCartId() {
+        return cartId;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public BundleRule getBundleRule() {
-        return bundleRule;
-    }
-
-    public void setBundleRule(BundleRule bundleRule) {
-        this.bundleRule = bundleRule;
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
     }
 
     public BigDecimal getDiscountAmount() {
@@ -54,7 +34,11 @@ public class DiscountApplication {
         this.discountAmount = discountAmount;
     }
 
-    public Timestamp getAppliedAt() {
-        return appliedAt;
+    public boolean isApplied() {
+        return applied;
+    }
+
+    public void setApplied(boolean applied) {
+        this.applied = applied;
     }
 }
