@@ -1,41 +1,26 @@
+package com.example.demo.service;
+
+import com.example.demo.model.Cart;
+import com.example.demo.model.DiscountApplication;
+import com.example.demo.repository.DiscountApplicationRepository;
 import org.springframework.stereotype.Service;
-import java.util.*;
-import java.math.BigDecimal;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DiscountService {
 
-    private final BundleRuleRepository bundleRepo;
-    private final CartItemRepository itemRepo;
-    private final DiscountApplicationRepository discountRepo;
+    private final DiscountApplicationRepository discountApplicationRepository;
 
-    public DiscountService(BundleRuleRepository bundleRepo,
-                           CartItemRepository itemRepo,
-                           DiscountApplicationRepository discountRepo) {
-        this.bundleRepo = bundleRepo;
-        this.itemRepo = itemRepo;
-        this.discountRepo = discountRepo;
+    public DiscountService(DiscountApplicationRepository discountApplicationRepository) {
+        this.discountApplicationRepository = discountApplicationRepository;
     }
 
-    public List<DiscountApplication> evaluateDiscounts(Long cartId) {
-
-        List<CartItem> items = itemRepo.findByCartId(cartId);
-        Set<Long> productIds = items.stream()
-                .map(i -> i.getProduct().getId())
-                .collect(Collectors.toSet());
-
-        List<DiscountApplication> applied = new ArrayList<>();
-
-        for (BundleRule rule : bundleRepo.findByActiveTrue()) {
-            Set<Long> required = Arrays.stream(rule.getRequiredProducts().split(","))
-                    .map(Long::valueOf).collect(Collectors.toSet());
-
-            if (productIds.containsAll(required)) {
-                DiscountApplication da = new DiscountApplication();
-                da.setDiscountAmount(BigDecimal.TEN);
-                applied.add(discountRepo.save(da));
-            }
-        }
-        return applied;
+    public List<DiscountApplication> getDiscountsByCart(Cart cart) {
+        return discountApplicationRepository.findAll()
+                .stream()
+                .filter(d -> d.getCart().getId().equals(cart.getId()))
+                .collect(Collectors.toList());
     }
 }
