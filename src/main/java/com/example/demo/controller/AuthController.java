@@ -1,13 +1,31 @@
-package com.example.demo.controller;
+public class AuthController(){
+    
+}package com.example.demo.controller;
 
+import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.dto.RegisterRequest;
+import com.example.demo.service.AuthService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    @PostMapping("/register")
+    public String register(@RequestBody RegisterRequest request) {
+        authService.register(request);
+        return "User registered successfully";
+    }
+
     @PostMapping("/login")
-    public String login() {
-        return "Login successful";
+    public AuthResponse login(@RequestBody AuthRequest request) {
+        return authService.login(request);
     }
 }
