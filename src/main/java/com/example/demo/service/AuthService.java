@@ -1,28 +1,12 @@
-@Service
-public class AuthService {
+public AuthResponse login(AuthRequest request) {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+    User user = userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
 
-    public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtTokenProvider jwtTokenProvider) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
+    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        throw new IllegalArgumentException("Invalid credentials");
     }
 
-    public void register(RegisterRequest req) {
-        if (userRepository.findByEmail(req.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("User already exists");
-        }
-
-        User user = new User();
-        user.setEmail(req.getEmail());
-        user.setPassword(passwordEncoder.encode(req.getPassword()));
-        user.setRole(req.getRole());
-
-        userRepository.save(user);
-    }
+    String token = jwtTokenProvider.generateToken(user.getEmail());
+    return new AuthResponse(token);
 }
