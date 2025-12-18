@@ -1,20 +1,11 @@
 @Entity
-public class DiscountApplication {
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+public class User {
 
     @Id @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private Cart cart;
-
-    @ManyToOne
-    private BundleRule bundleRule;
-
-    private BigDecimal discountAmount;
-    private Timestamp appliedAt;
-
-    @PrePersist
-    void applied() {
-        appliedAt = new Timestamp(System.currentTimeMillis());
-    }
+    private String email;
+    private String password;
+    private String role;
 }
