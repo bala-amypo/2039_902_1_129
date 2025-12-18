@@ -4,22 +4,17 @@ import com.example.demo.model.Cart;
 import com.example.demo.repository.CartRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class CartService {
 
-    private final CartRepository repository;
+    private final CartRepository cartRepository;
 
-    public CartService(CartRepository repository) {
-        this.repository = repository;
+    public CartService(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
     }
 
-    public Cart save(Cart cart) {
-        return repository.save(cart);
-    }
-
-    public List<Cart> getAll() {
-        return repository.findAll();
+    public Cart getCart(Long userId) {
+        return cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
     }
 }

@@ -6,21 +6,21 @@ import jakarta.persistence.*;
 @Entity
 public class Cart {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;
-    private Boolean active = true;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
 
-    @PrePersist
-    void created() {
-        createdAt = updatedAt = new Timestamp(System.currentTimeMillis());
+    public Long getId() {
+        return id;
     }
 
-    @PreUpdate
-    void updated() {
-        updatedAt = new Timestamp(System.currentTimeMillis());
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
