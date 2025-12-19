@@ -1,8 +1,7 @@
 package com.example.demo.model;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 import jakarta.persistence.*;
+
 @Entity
 public class Cart {
 
@@ -12,15 +11,11 @@ public class Cart {
 
     private Long userId;
 
-    public Long getId() {
-        return id;
-    }
+    private Boolean active = true;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+    public Long getId() { return id; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

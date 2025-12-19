@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 public class DiscountApplication {
@@ -10,35 +11,18 @@ public class DiscountApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long cartId;
+    @ManyToOne
+    private Cart cart;
+
+    @ManyToOne
+    private BundleRule bundleRule;
+
     private BigDecimal discountAmount;
-    private boolean applied;
 
-    public Long getId() {
-        return id;
-    }
+    private LocalDateTime appliedAt = LocalDateTime.now();
 
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
-    }
-
-    public BigDecimal getDiscountAmount() {
-        return discountAmount;
-    }
-
-    public void setDiscountAmount(BigDecimal discountAmount) {
-        this.discountAmount = discountAmount;
-    }
-
-    public boolean isApplied() {
-        return applied;
-    }
-
-    public void setApplied(boolean applied) {
-        this.applied = applied;
-    }
+    // getters & setters
+    public void setCart(Cart cart) { this.cart = cart; }
+    public void setBundleRule(BundleRule bundleRule) { this.bundleRule = bundleRule; }
+    public void setDiscountAmount(BigDecimal discountAmount) { this.discountAmount = discountAmount; }
 }

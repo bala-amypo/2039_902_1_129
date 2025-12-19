@@ -1,18 +1,28 @@
 package com.example.demo.model;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 import jakarta.persistence.*;
+
 @Entity
 public class BundleRule {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String ruleName;
 
-    private String requiredProducts;
+    private String requiredProductIds; // CSV
+
     private Double discountPercentage;
+
     private Boolean active = true;
+
+    // getters & setters
+    public Long getId() { return id; }
+    public String getRequiredProductIds() { return requiredProductIds; }
+    public void setRequiredProductIds(String requiredProductIds) { this.requiredProductIds = requiredProductIds; }
+    public Double getDiscountPercentage() { return discountPercentage; }
+    public void setDiscountPercentage(Double discountPercentage) { this.discountPercentage = discountPercentage; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }
