@@ -19,10 +19,43 @@ public class DiscountApplication {
 
     private BigDecimal discountAmount;
 
-    private LocalDateTime appliedAt = LocalDateTime.now();
+    private LocalDateTime appliedAt;
 
-    // getters & setters
-    public void setCart(Cart cart) { this.cart = cart; }
-    public void setBundleRule(BundleRule bundleRule) { this.bundleRule = bundleRule; }
-    public void setDiscountAmount(BigDecimal discountAmount) { this.discountAmount = discountAmount; }
+    // ✅ REQUIRED getters & setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public BundleRule getBundleRule() {
+        return bundleRule;
+    }
+
+    public void setBundleRule(BundleRule bundleRule) {
+        this.bundleRule = bundleRule;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
+    }
+
+    public LocalDateTime getAppliedAt() {
+        return appliedAt;
+    }
+
+    public void setAppliedAt(LocalDateTime appliedAt) {   // ✅ THIS FIXES ERROR
+        this.appliedAt = appliedAt;
+    }
 }

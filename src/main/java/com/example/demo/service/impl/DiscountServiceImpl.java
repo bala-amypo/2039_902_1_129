@@ -16,22 +16,26 @@ public class DiscountServiceImpl {
     private final CartRepository cartRepo;
     private final CartItemRepository cartItemRepo;
 
-    public DiscountServiceImpl(DiscountApplicationRepository discountRepo,
-                               BundleRuleRepository ruleRepo,
-                               CartRepository cartRepo,
-                               CartItemRepository cartItemRepo) {
+    public DiscountServiceImpl(
+            DiscountApplicationRepository discountRepo,
+            BundleRuleRepository ruleRepo,
+            CartRepository cartRepo,
+            CartItemRepository cartItemRepo) {
         this.discountRepo = discountRepo;
         this.ruleRepo = ruleRepo;
         this.cartRepo = cartRepo;
         this.cartItemRepo = cartItemRepo;
     }
 
+    // ✅ USED BY CONTROLLER
+    public List<DiscountApplication> getApplicationsForCart(Long cartId) {
+        return discountRepo.findByCartId(cartId);
+    }
+
     public List<DiscountApplication> evaluateDiscounts(Long cartId) {
 
         Cart cart = cartRepo.findById(cartId).orElseThrow();
-        if (!cart.getActive()) {
-            return List.of();
-        }
+        if (!cart.getActive()) return List.of();
 
         discountRepo.deleteByCartId(cartId);
 
@@ -70,7 +74,7 @@ public class DiscountServiceImpl {
                 app.setCart(cart);
                 app.setBundleRule(rule);
                 app.setDiscountAmount(discount);
-                app.setAppliedAt(LocalDateTime.now());
+                app.setAppliedAt(LocalDateTime.now()); // ✅ now works
 
                 result.add(discountRepo.save(app));
             }
