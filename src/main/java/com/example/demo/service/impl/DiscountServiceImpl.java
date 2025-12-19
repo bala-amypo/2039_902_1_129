@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,16 +28,30 @@ public class DiscountServiceImpl {
         this.cartItemRepo = cartItemRepo;
     }
 
-    // ✅ USED BY CONTROLLER
+    // ✅ GET /api/discounts/{id}
+    public DiscountApplication getDiscountById(Long id) {
+        return discountRepo.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Discount application not found"));
+    }
+
+    // ✅ GET /api/discounts/cart/{cartId}
     public List<DiscountApplication> getApplicationsForCart(Long cartId) {
         return discountRepo.findByCartId(cartId);
     }
 
+    // ✅ POST /api/discounts/evaluate/{cartId}
     public List<DiscountApplication> evaluateDiscounts(Long cartId) {
 
-        Cart cart = cartRepo.findById(cartId).orElseThrow();
-        if (!cart.getActive()) return List.of();
+        Cart cart = cartRepo.findById(cartId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Cart not found"));
 
+        if (!cart.getActive()) {
+            return List.of();
+        }
+
+        // Remove old discounts
         discountRepo.deleteByCartId(cartId);
 
         List<CartItem> items = cartItemRepo.findByCartId(cartId);
@@ -57,8 +72,9 @@ public class DiscountServiceImpl {
             boolean match = true;
             BigDecimal total = BigDecimal.ZERO;
 
-            for (String id : rule.getRequiredProductIds().split(",")) {
-                Long pid = Long.valueOf(id.trim());
+            for (String pidStr : rule.getRequiredProductIds().split(",")) {
+                Long pid = Long.valueOf(pidStr.trim());
+
                 if (!priceMap.containsKey(pid)) {
                     match = false;
                     break;
@@ -67,14 +83,15 @@ public class DiscountServiceImpl {
             }
 
             if (match) {
-                BigDecimal discount = total.multiply(
-                        BigDecimal.valueOf(rule.getDiscountPercentage() / 100));
+                BigDecimal discountAmount = total.multiply(
+                        BigDecimal.valueOf(rule.getDiscountPercentage() / 100.0)
+                );
 
                 DiscountApplication app = new DiscountApplication();
                 app.setCart(cart);
                 app.setBundleRule(rule);
-                app.setDiscountAmount(discount);
-                app.setAppliedAt(LocalDateTime.now()); // ✅ now works
+                app.setDiscountAmount(discountAmount);
+                app.setAppliedAt(LocalDateTime.now());
 
                 result.add(discountRepo.save(app));
             }
