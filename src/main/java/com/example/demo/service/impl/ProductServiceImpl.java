@@ -3,34 +3,51 @@ package com.example.demo.service.impl;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 
+@Service
 public class ProductServiceImpl {
 
-    private final ProductRepository repo;
+    private final ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository repo) {
-        this.repo = repo;
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
-    public Product createProduct(Product p) {
-        if (repo.findBySku(p.getSku()).isPresent())
+    public Product createProduct(Product product) {
+
+        if (productRepository.findBySku(product.getSku()).isPresent()) {
             throw new IllegalArgumentException("SKU already exists");
+        }
 
-        if (p.getPrice().compareTo(BigDecimal.ZERO) <= 0)
+        if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Price must be positive");
+        }
 
-        return repo.save(p);
+        product.setActive(true);
+        return productRepository.save(product);
+    }
+
+    public Product updateProduct(Long id, Product updated) {
+        Product existing = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+        existing.setName(updated.getName());
+        existing.setPrice(updated.getPrice());
+
+        return productRepository.save(existing);
     }
 
     public Product getProductById(Long id) {
-        return repo.findById(id)
+        return productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
     }
 
     public void deactivateProduct(Long id) {
-        Product p = getProductById(id);
-        p.setActive(false);
-        repo.save(p);
+        Product product = getProductById(id);
+        product.setActive(false);
+        productRepository.save(product);
     }
 }

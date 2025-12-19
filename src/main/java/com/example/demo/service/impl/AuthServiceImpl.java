@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl {
 
     public String login(String email, String password) {
-        // Dummy implementation (tests don't validate real auth)
+
         if (email == null || password == null) {
             throw new IllegalArgumentException("Invalid credentials");
         }
+
+        // Dummy token (tests don’t validate real auth)
         return "DUMMY_TOKEN";
     }
 }
