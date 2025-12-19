@@ -1,19 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Cart;
-import com.example.demo.repository.CartRepository;
-import org.springframework.stereotype.Service;
 
-@Service
-public class CartService {
+public interface CartService {
 
-    private final CartRepository cartRepository;
+    Cart createCart(Long userId);
 
-    public CartService(CartRepository cartRepository) {
-        this.cartRepository = cartRepository;
-    }
+    Cart getCartById(Long id);
 
-    public Cart getCart(Long userId) {
-        return cartRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Cart not found"));
-    }
+    Cart getActiveCartForUser(Long userId);
+
+    void deactivateCart(Long id);
 }

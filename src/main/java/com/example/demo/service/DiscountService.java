@@ -1,19 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.model.DiscountApplication;
-import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
+import java.util.List;
 
-@Service
-public class DiscountService {
+public interface DiscountService {
 
-    public DiscountApplication evaluateDiscount(Long cartId) {
+    List<DiscountApplication> evaluateDiscounts(Long cartId);
 
-        DiscountApplication discount = new DiscountApplication();
-        discount.setCartId(cartId);
-        discount.setDiscountAmount(BigDecimal.valueOf(100));
-        discount.setApplied(true);
+    DiscountApplication getApplicationById(Long id);
 
-        return discount;
-    }
+    List<DiscountApplication> getApplicationsForCart(Long cartId);
 }

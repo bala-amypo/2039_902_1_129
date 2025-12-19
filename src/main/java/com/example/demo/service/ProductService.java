@@ -1,25 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Product;
-import com.example.demo.repository.ProductRepository;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+public interface ProductService {
 
-@Service
-public class ProductService {
+    Product createProduct(Product product);
 
-    private final ProductRepository repository;
+    Product updateProduct(Long id, Product product);
 
-    public ProductService(ProductRepository repository) {
-        this.repository = repository;
-    }
+    Product getProductById(Long id);
 
-    public Product createProduct(Product product) {
-        return repository.save(product);
-    }
-
-    public Optional<Product> getProductById(Long id) {
-        return repository.findById(id);
-    }
+    void deactivateProduct(Long id);
 }

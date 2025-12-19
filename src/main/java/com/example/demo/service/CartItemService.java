@@ -1,21 +1,15 @@
 package com.example.demo.service;
 
 import com.example.demo.model.CartItem;
-import com.example.demo.repository.CartItemRepository;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class CartItemService {
+public interface CartItemService {
 
-    private final CartItemRepository repository;
+    CartItem addItemToCart(CartItem item);
 
-    public CartItemService(CartItemRepository repository) {
-        this.repository = repository;
-    }
+    CartItem updateItem(Long id, Integer quantity);
 
-    public CartItem addItem(Long cartId, Long productId, Integer quantity) {
-        CartItem item = new CartItem();
-        item.setQuantity(quantity);
-        return repository.save(item);
-    }
+    List<CartItem> getItemsForCart(Long cartId);
+
+    void removeItem(Long id);
 }

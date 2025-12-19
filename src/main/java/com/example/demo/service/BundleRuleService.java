@@ -1,25 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.model.BundleRule;
-import com.example.demo.repository.BundleRuleRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class BundleRuleService {
+public interface BundleRuleService {
 
-    private final BundleRuleRepository repository;
+    BundleRule createRule(BundleRule rule);
 
-    public BundleRuleService(BundleRuleRepository repository) {
-        this.repository = repository;
-    }
+    BundleRule updateRule(Long id, BundleRule rule);
 
-    public BundleRule createRule(BundleRule rule) {
-        return repository.save(rule);
-    }
+    BundleRule getRuleById(Long id);
 
-    public List<BundleRule> getAll() {
-        return repository.findAll();
-    }
+    List<BundleRule> getActiveRules();
+
+    void deactivateRule(Long id);
 }
