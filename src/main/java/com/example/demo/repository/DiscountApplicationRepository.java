@@ -1,9 +1,10 @@
-package com.example.demo.repository;
+package com.example.demo.model;
 
-import com.example.demo.model.DiscountApplication;
-import org.springframework.data.jpa.repository.JpaRepository;
+import jakarta.persistence.*;
 
-public interface DiscountApplicationRepository extends JpaRepository<DiscountApplication, Long> {
+@Entity
+public class DiscountApplication {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
