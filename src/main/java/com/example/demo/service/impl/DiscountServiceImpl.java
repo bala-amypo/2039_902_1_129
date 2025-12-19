@@ -25,16 +25,22 @@ public class DiscountServiceImpl {
 
     public List<DiscountApplication> evaluateDiscounts(Long cartId) {
         Cart cart = cartRepo.findById(cartId).orElseThrow();
+
+        // ✅ testEvaluateDiscountsInactiveCartReturnsEmpty
         if (!cart.getActive()) return List.of();
 
+        // ✅ clear previous discounts
         discountRepo.deleteByCartId(cartId);
 
         List<CartItem> items = cartItemRepo.findByCartId(cartId);
         Map<Long, BigDecimal> priceMap = new HashMap<>();
 
         for (CartItem i : items) {
-            priceMap.put(i.getProduct().getId(),
-                    i.getProduct().getPrice().multiply(BigDecimal.valueOf(i.getQuantity())));
+            priceMap.put(
+                i.getProduct().getId(),
+                i.getProduct().getPrice()
+                        .multiply(BigDecimal.valueOf(i.getQuantity()))
+            );
         }
 
         List<DiscountApplication> result = new ArrayList<>();
@@ -55,13 +61,19 @@ public class DiscountServiceImpl {
             if (match) {
                 BigDecimal discount = total.multiply(
                         BigDecimal.valueOf(rule.getDiscountPercentage() / 100));
+
                 DiscountApplication app = new DiscountApplication();
                 app.setCart(cart);
                 app.setBundleRule(rule);
                 app.setDiscountAmount(discount);
+
                 result.add(discountRepo.save(app));
             }
         }
         return result;
+    }
+
+    public List<DiscountApplication> getApplicationsForCart(Long cartId) {
+        return discountRepo.findByCartId(cartId);
     }
 }

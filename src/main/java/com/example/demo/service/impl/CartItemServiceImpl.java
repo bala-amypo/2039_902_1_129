@@ -3,8 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
 import jakarta.persistence.EntityNotFoundException;
-
-
+import java.util.List;
 
 public class CartItemServiceImpl {
 
@@ -12,7 +11,10 @@ public class CartItemServiceImpl {
     private final CartRepository cartRepo;
     private final ProductRepository productRepo;
 
-    public CartItemServiceImpl(CartItemRepository c, CartRepository cr, ProductRepository pr) {
+    public CartItemServiceImpl(
+            CartItemRepository c,
+            CartRepository cr,
+            ProductRepository pr) {
         this.cartItemRepo = c;
         this.cartRepo = cr;
         this.productRepo = pr;
@@ -34,9 +36,15 @@ public class CartItemServiceImpl {
         return cartItemRepo
                 .findByCartIdAndProductId(cart.getId(), product.getId())
                 .map(existing -> {
-                    existing.setQuantity(existing.getQuantity() + item.getQuantity());
+                    existing.setQuantity(
+                            existing.getQuantity() + item.getQuantity());
                     return cartItemRepo.save(existing);
                 })
                 .orElseGet(() -> cartItemRepo.save(item));
+    }
+
+
+    public List<CartItem> getItemsForCart(Long cartId) {
+        return cartItemRepo.findByCartId(cartId);
     }
 }
