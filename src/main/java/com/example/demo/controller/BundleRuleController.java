@@ -1,22 +1,28 @@
 package com.example.demo.controller;
-import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.BundleRule;
-import com.example.demo.service.BundleRuleService;
+import com.example.demo.service.impl.BundleRuleServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/bundle-rules")
+@RequestMapping("/api/bundle-rules")
 public class BundleRuleController {
 
-    private final BundleRuleService service;
+    private final BundleRuleServiceImpl service;
 
-    public BundleRuleController(BundleRuleService service) {
+    public BundleRuleController(BundleRuleServiceImpl service) {
         this.service = service;
     }
 
     @PostMapping
     public BundleRule create(@RequestBody BundleRule rule) {
         return service.createRule(rule);
+    }
+
+    @GetMapping("/active")
+    public List<BundleRule> activeRules() {
+        return service.getActiveRules();
     }
 }

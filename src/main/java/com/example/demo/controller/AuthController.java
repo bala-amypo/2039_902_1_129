@@ -1,57 +1,28 @@
 package com.example.demo.controller;
-import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.dto.RegisterRequest;
-import com.example.demo.model.User;
-
-import com.example.demo.repository.UserRepository;
-import com.example.demo.security.JwtTokenProvider;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.demo.service.impl.AuthServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthServiceImpl authService;
 
-    public AuthController(UserRepository userRepository,
-                          PasswordEncoder passwordEncoder,
-                          JwtTokenProvider jwtTokenProvider) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
+    public AuthController(AuthServiceImpl authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
-        User user = new User();
-        user.setEmail(request.email);
-        user.setPassword(passwordEncoder.encode(request.password));
-        user.setRole(request.role);
-        userRepository.save(user);
-        return "User registered successfully";
+    public void register(@RequestBody RegisterRequest req) {
+        authService.register(req);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest request) {
-        var user = userRepository.findByEmail(request.email)
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
-
-        if (!passwordEncoder.matches(request.password, user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
-        }
-
-        return jwtTokenProvider.generateToken(
-                org.springframework.security.core.userdetails.User
-                        .withUsername(user.getEmail())
-                        .password(user.getPassword())
-                        .roles(user.getRole())
-                        .build()
-        );
+    public AuthResponse login(@RequestBody AuthRequest req) {
+        return authService.login(req);
     }
 }
