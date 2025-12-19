@@ -1,21 +1,26 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Cart;
-import com.example.demo.service.CartService;
+import com.example.demo.service.impl.CartServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/carts")
 public class CartController {
 
-    private final CartService cartService;
+    private final CartServiceImpl service;
 
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
+    public CartController(CartServiceImpl service) {
+        this.service = service;
     }
 
-    @GetMapping("/{userId}")
-    public Cart getCart(@PathVariable Long userId) {
-        return cartService.getCart(userId);
+    @PostMapping("/user/{userId}")
+    public Cart create(@PathVariable Long userId) {
+        return service.createCart(userId);
+    }
+
+    @GetMapping("/user/{userId}")
+    public Cart get(@PathVariable Long userId) {
+        return service.getActiveCartForUser(userId);
     }
 }
