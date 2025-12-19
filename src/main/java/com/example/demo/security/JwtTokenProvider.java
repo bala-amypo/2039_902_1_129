@@ -17,4 +17,11 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         return token != null && token.contains(":");
     }
+
+    public String getUsernameFromToken(String token) {
+        if (token == null) {
+            return null;
+        }
+        return token.split(":")[0];
+    }
 }
