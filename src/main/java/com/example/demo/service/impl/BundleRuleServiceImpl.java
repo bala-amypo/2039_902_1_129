@@ -2,31 +2,30 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.BundleRule;
 import com.example.demo.repository.BundleRuleRepository;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-
+@Service   // ✅ REQUIRED
 public class BundleRuleServiceImpl {
 
-    private final BundleRuleRepository repository;
+    private final BundleRuleRepository bundleRuleRepository;
 
-    public BundleRuleServiceImpl(BundleRuleRepository repository) {
-        this.repository = repository;
+    public BundleRuleServiceImpl(BundleRuleRepository bundleRuleRepository) {
+        this.bundleRuleRepository = bundleRuleRepository;
     }
 
     public BundleRule createRule(BundleRule rule) {
-        if (rule.getDiscountPercentage() < 0 || rule.getDiscountPercentage() > 100) {
-            throw new IllegalArgumentException("Discount must be between 0 and 100");
-        }
 
         if (rule.getRequiredProductIds() == null ||
-                rule.getRequiredProductIds().trim().isEmpty()) {
+            rule.getRequiredProductIds().trim().isEmpty()) {
             throw new IllegalArgumentException("Required products cannot be empty");
         }
 
-        return repository.save(rule);
-    }
+        if (rule.getDiscountPercentage() < 0 ||
+            rule.getDiscountPercentage() > 100) {
+            throw new IllegalArgumentException("Discount must be between 0 and 100");
+        }
 
-    public List<BundleRule> getActiveRules() {
-        return repository.findByActiveTrue();
+        rule.setActive(true);
+        return bundleRuleRepository.save(rule);
     }
 }
