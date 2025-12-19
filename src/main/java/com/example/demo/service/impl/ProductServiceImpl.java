@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl {
@@ -22,7 +23,8 @@ public class ProductServiceImpl {
             throw new IllegalArgumentException("SKU already exists");
         }
 
-        if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+        if (product.getPrice() == null ||
+            product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Price must be positive");
         }
 
@@ -31,6 +33,7 @@ public class ProductServiceImpl {
     }
 
     public Product updateProduct(Long id, Product updated) {
+
         Product existing = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
@@ -43,6 +46,11 @@ public class ProductServiceImpl {
     public Product getProductById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+    }
+
+    // ✅ NEW – required for GET /api/products
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 
     public void deactivateProduct(Long id) {
