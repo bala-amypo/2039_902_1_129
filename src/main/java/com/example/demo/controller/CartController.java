@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/carts")
 public class CartController {
 
-    private final CartServiceImpl service;
+    private final CartServiceImpl cartService;
 
-    public CartController(CartServiceImpl service) {
-        this.service = service;
+    public CartController(CartServiceImpl cartService) {
+        this.cartService = cartService;
     }
 
     @PostMapping("/user/{userId}")
-    public Cart create(@PathVariable Long userId) {
-        return service.createCart(userId);
+    public Cart createOrGetCart(@PathVariable Long userId) {
+        return cartService.createCart(userId);
     }
 
     @GetMapping("/user/{userId}")
-    public Cart get(@PathVariable Long userId) {
-        return service.getActiveCartForUser(userId);
+    public Cart getActiveCart(@PathVariable Long userId) {
+        return cartService.getActiveCartForUser(userId);
     }
 }
