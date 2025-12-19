@@ -21,6 +21,12 @@ public class DiscountController {
         return service.evaluateDiscounts(cartId);
     }
 
+    // ✅ MISSING ENDPOINT (FIX)
+    @GetMapping("/{id}")
+    public DiscountApplication getById(@PathVariable Long id) {
+        return service.getDiscountById(id);
+    }
+
     @GetMapping("/cart/{cartId}")
     public List<DiscountApplication> getForCart(@PathVariable Long cartId) {
         return service.getApplicationsForCart(cartId);
