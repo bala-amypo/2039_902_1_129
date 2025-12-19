@@ -34,6 +34,14 @@
         </dependency>
 
         <!-- ========================= -->
+        <!-- Spring Security (REQUIRED) -->
+        <!-- ========================= -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- ========================= -->
         <!-- JPA / Hibernate -->
         <!-- ========================= -->
         <dependency>
@@ -60,7 +68,7 @@
         </dependency>
 
         <!-- ========================= -->
-        <!-- JWT (optional but safe) -->
+        <!-- JWT -->
         <!-- ========================= -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -101,7 +109,7 @@
     <build>
         <plugins>
 
-            <!-- Spring Boot Plugin (REQUIRED to start app) -->
+            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
