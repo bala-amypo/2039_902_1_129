@@ -1,27 +1,58 @@
 package com.example.demo.security;
 
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
+
+import java.security.Key;
+import java.util.Date;
+
+@Component
 public class JwtTokenProvider {
 
-    private final String secret;
-    private final long validity;
+    // 🔐 Secret key (minimum 32 chars)
+    private static final String SECRET =
+            "MySuperSecretJwtKeyMySuperSecretJwtKey";
 
-    public JwtTokenProvider(String secret, long validity) {
-        this.secret = secret;
-        this.validity = validity;
+    // ⏱ 1 hour validity
+    private static final long VALIDITY = 60 * 60 * 1000;
+
+    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+
+    // ✅ Generate REAL JWT
+    public String generateToken(String email) {
+
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + VALIDITY);
+
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
-    public String generateToken(String email, String role, Long userId) {
-        return email + ":" + role + ":" + userId;
-    }
-
-    public boolean validateToken(String token) {
-        return token != null && token.contains(":");
-    }
-
+    // ✅ Extract username
     public String getUsernameFromToken(String token) {
-        if (token == null) {
-            return null;
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    // ✅ Validate token
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
         }
-        return token.split(":")[0];
     }
 }
