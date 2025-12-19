@@ -1,17 +1,26 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.AuthResponse;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthServiceImpl {
 
-    public String login(String email, String password) {
+    // ✅ Register user
+    public AuthResponse register(AuthRequest request) {
+        // demo implementation (no DB user table yet)
+        return new AuthResponse(
+                "REGISTER_SUCCESS",
+                "dummy-jwt-token"
+        );
+    }
 
-        if (email == null || password == null) {
-            throw new IllegalArgumentException("Invalid credentials");
-        }
-
-        // Dummy token (tests don’t validate real auth)
-        return "DUMMY_TOKEN";
+    // ✅ Login user
+    public AuthResponse login(AuthRequest request) {
+        return new AuthResponse(
+                "LOGIN_SUCCESS",
+                "dummy-jwt-token"
+        );
     }
 }
