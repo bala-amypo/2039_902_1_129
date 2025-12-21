@@ -2,11 +2,30 @@ package com.example.demo.repository;
 
 import com.example.demo.model.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.*;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
+    // ✅ Existing methods (already used in services)
     Optional<CartItem> findByCartIdAndProductId(Long cartId, Long productId);
 
     List<CartItem> findByCartId(Long cartId);
+
+    // =====================================================
+    // ✅ REQUIRED BY TEST CASES (DO NOT REMOVE)
+    // =====================================================
+    @Query("""
+        SELECT ci
+        FROM CartItem ci
+        WHERE ci.cart.id = :cartId
+          AND ci.quantity >= :minQuantity
+    """)
+    List<CartItem> findByCartIdAndMinQuantity(
+            @Param("cartId") Long cartId,
+            @Param("minQuantity") Integer minQuantity
+    );
 }
