@@ -48,7 +48,7 @@ public class ProductServiceImpl {
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
     }
 
-    // ✅ NEW – required for GET /api/products
+   
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }

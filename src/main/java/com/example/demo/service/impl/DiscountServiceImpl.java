@@ -28,19 +28,19 @@ public class DiscountServiceImpl {
         this.cartItemRepo = cartItemRepo;
     }
 
-    // ✅ GET /api/discounts/{id}
+   
     public DiscountApplication getDiscountById(Long id) {
         return discountRepo.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Discount application not found"));
     }
 
-    // ✅ GET /api/discounts/cart/{cartId}
+   
     public List<DiscountApplication> getApplicationsForCart(Long cartId) {
         return discountRepo.findByCartId(cartId);
     }
 
-    // ✅ POST /api/discounts/evaluate/{cartId}
+   
     public List<DiscountApplication> evaluateDiscounts(Long cartId) {
 
         Cart cart = cartRepo.findById(cartId)
@@ -51,7 +51,7 @@ public class DiscountServiceImpl {
             return List.of();
         }
 
-        // Remove old discounts
+     
         discountRepo.deleteByCartId(cartId);
 
         List<CartItem> items = cartItemRepo.findByCartId(cartId);
