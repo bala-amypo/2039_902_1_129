@@ -21,7 +21,7 @@ public class DiscountApplication {
 
     private LocalDateTime appliedAt;
 
-    // ✅ REQUIRED getters & setters
+    // ===== getters =====
 
     public Long getId() {
         return id;
@@ -31,31 +31,38 @@ public class DiscountApplication {
         return cart;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
     public BundleRule getBundleRule() {
         return bundleRule;
-    }
-
-    public void setBundleRule(BundleRule bundleRule) {
-        this.bundleRule = bundleRule;
     }
 
     public BigDecimal getDiscountAmount() {
         return discountAmount;
     }
 
-    public void setDiscountAmount(BigDecimal discountAmount) {
-        this.discountAmount = discountAmount;
-    }
-
     public LocalDateTime getAppliedAt() {
         return appliedAt;
     }
 
-    public void setAppliedAt(LocalDateTime appliedAt) {   // ✅ THIS FIXES ERROR
+    // ===== setters =====
+
+    // ✅ REQUIRED BY TEST CASES
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public void setBundleRule(BundleRule bundleRule) {
+        this.bundleRule = bundleRule;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
+    }
+
+    public void setAppliedAt(LocalDateTime appliedAt) {
         this.appliedAt = appliedAt;
     }
 }
