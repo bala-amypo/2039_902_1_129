@@ -14,25 +14,25 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    // ✅ Create or get active cart for user
+   
     @PostMapping("/user/{userId}")
     public Cart createOrGetCart(@PathVariable Long userId) {
         return cartService.createCart(userId);
     }
 
-    // ✅ Get active cart for user
+   
     @GetMapping("/user/{userId}")
     public Cart getActiveCart(@PathVariable Long userId) {
         return cartService.getActiveCartForUser(userId);
     }
 
-    // ✅ Get cart by cart id
+   
     @GetMapping("/{id}")
     public Cart getCartById(@PathVariable Long id) {
         return cartService.getCartById(id);
     }
 
-    // ✅ Deactivate cart
+    
     @PutMapping("/{id}/deactivate")
     public void deactivateCart(@PathVariable Long id) {
         cartService.deactivateCart(id);

@@ -18,7 +18,7 @@ public class CartItemController {
         this.service = service;
     }
 
-    // ✅ Add item to cart
+    
     @PostMapping
     public CartItem addItem(
             @RequestParam Long cartId,
@@ -40,13 +40,13 @@ public class CartItemController {
         return service.addItemToCart(item);
     }
 
-    // ✅ Get items for cart
+  
     @GetMapping("/cart/{cartId}")
     public List<CartItem> getItems(@PathVariable Long cartId) {
         return service.getItemsForCart(cartId);
     }
 
-    // ✅ Update quantity
+   
     @PutMapping("/{id}")
     public CartItem updateQuantity(
             @PathVariable Long id,
@@ -54,7 +54,7 @@ public class CartItemController {
         return service.updateQuantity(id, quantity);
     }
 
-    // ✅ Remove item
+   
     @DeleteMapping("/{id}")
     public void deleteItem(@PathVariable Long id) {
         service.removeItem(id);

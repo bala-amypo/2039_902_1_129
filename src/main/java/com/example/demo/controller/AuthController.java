@@ -15,13 +15,11 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // ✅ REGISTER (THIS WAS MISSING)
     @PostMapping("/register")
     public AuthResponse register(@RequestBody AuthRequest request) {
         return authService.register(request);
     }
 
-    // ✅ LOGIN (ALREADY PRESENT)
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
         return authService.login(request);
