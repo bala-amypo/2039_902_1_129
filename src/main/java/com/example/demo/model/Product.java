@@ -23,13 +23,13 @@ public class Product {
 
     private Boolean active = true;
 
-    // ===== getters & setters =====
+   
 
     public Long getId() {
         return id;
     }
 
-    // ✅ REQUIRED for CartItemController
+   
     public void setId(Long id) {
         this.id = id;
     }

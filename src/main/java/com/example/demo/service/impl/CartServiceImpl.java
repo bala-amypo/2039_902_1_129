@@ -14,7 +14,7 @@ public class CartServiceImpl {
         this.cartRepository = cartRepository;
     }
 
-    // ✅ Create or reuse active cart
+ 
     public Cart createCart(Long userId) {
 
         return cartRepository
@@ -27,7 +27,7 @@ public class CartServiceImpl {
                 });
     }
 
-    // ✅ Get active cart for user
+   
     public Cart getActiveCartForUser(Long userId) {
         return cartRepository
                 .findByUserIdAndActiveTrue(userId)
@@ -35,14 +35,14 @@ public class CartServiceImpl {
                         new EntityNotFoundException("Active cart not found"));
     }
 
-    // ✅ Get cart by id
+ 
     public Cart getCartById(Long id) {
         return cartRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException("Cart not found"));
     }
 
-    // ✅ Deactivate cart
+ 
     public void deactivateCart(Long id) {
         Cart cart = getCartById(id);
         cart.setActive(false);

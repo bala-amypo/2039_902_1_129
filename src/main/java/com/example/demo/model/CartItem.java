@@ -17,7 +17,7 @@ public class CartItem {
 
     private Integer quantity;
 
-    // ===== getters =====
+  
 
     public Long getId() {
         return id;
@@ -35,9 +35,7 @@ public class CartItem {
         return quantity;
     }
 
-    // ===== setters =====
-
-    // ✅ REQUIRED BY TEST CASES
+   
     public void setId(Long id) {
         this.id = id;
     }

@@ -26,7 +26,7 @@ public class CartItemServiceImpl {
         this.productRepo = productRepo;
     }
 
-    // ✅ Add or merge item
+    
     public CartItem addItemToCart(CartItem item) {
 
         if (item.getQuantity() == null || item.getQuantity() <= 0) {
@@ -52,12 +52,12 @@ public class CartItemServiceImpl {
                 .orElseGet(() -> cartItemRepo.save(item));
     }
 
-    // ✅ List items for cart
+ 
     public List<CartItem> getItemsForCart(Long cartId) {
         return cartItemRepo.findByCartId(cartId);
     }
 
-    // ✅ Update quantity
+   
     public CartItem updateQuantity(Long id, Integer quantity) {
 
         if (quantity == null || quantity <= 0) {
@@ -71,7 +71,7 @@ public class CartItemServiceImpl {
         return cartItemRepo.save(item);
     }
 
-    // ✅ Remove item
+    
     public void removeItem(Long id) {
         cartItemRepo.deleteById(id);
     }

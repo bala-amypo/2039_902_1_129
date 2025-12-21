@@ -10,14 +10,11 @@ import java.util.Optional;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    // ✅ Existing methods (already used in services)
+  
     Optional<CartItem> findByCartIdAndProductId(Long cartId, Long productId);
 
     List<CartItem> findByCartId(Long cartId);
 
-    // =====================================================
-    // ✅ REQUIRED BY TEST CASES (DO NOT REMOVE)
-    // =====================================================
     @Query("""
         SELECT ci
         FROM CartItem ci

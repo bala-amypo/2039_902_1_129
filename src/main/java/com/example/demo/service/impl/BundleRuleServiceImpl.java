@@ -24,7 +24,7 @@ public class BundleRuleServiceImpl {
         return bundleRuleRepository.save(rule);
     }
 
-    // ✅ Update rule
+   
     public BundleRule updateRule(Long id, BundleRule updated) {
 
         BundleRule existing = getRuleById(id);
@@ -37,25 +37,24 @@ public class BundleRuleServiceImpl {
         return bundleRuleRepository.save(existing);
     }
 
-    // ✅ Get rule by id
+ 
     public BundleRule getRuleById(Long id) {
         return bundleRuleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Bundle rule not found"));
     }
 
-    // ✅ Get active rules
     public List<BundleRule> getActiveRules() {
         return bundleRuleRepository.findByActiveTrue();
     }
 
-    // ✅ Deactivate rule
+   
     public void deactivateRule(Long id) {
         BundleRule rule = getRuleById(id);
         rule.setActive(false);
         bundleRuleRepository.save(rule);
     }
 
-    // 🔒 Common validation logic
+   
     private void validateRule(BundleRule rule) {
 
         if (rule.getRequiredProductIds() == null ||

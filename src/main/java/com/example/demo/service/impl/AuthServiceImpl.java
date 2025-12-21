@@ -14,10 +14,10 @@ public class AuthServiceImpl {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    // ✅ LOGIN → REAL JWT
+   
     public AuthResponse login(AuthRequest request) {
 
-        // (Dummy validation for assignment)
+       
         if (request.getEmail() == null || request.getPassword() == null) {
             throw new IllegalArgumentException("Invalid credentials");
         }
@@ -27,7 +27,7 @@ public class AuthServiceImpl {
         return new AuthResponse("LOGIN_SUCCESS", token);
     }
 
-    // ✅ REGISTER → REAL JWT
+    
     public AuthResponse register(AuthRequest request) {
 
         String token = jwtTokenProvider.generateToken(request.getEmail());
