@@ -17,9 +17,6 @@ public class BundleRule {
     private Double discountPercentage;
 
     private Boolean active = true;
-
-   
-
     public Long getId() {
         return id;
     }
