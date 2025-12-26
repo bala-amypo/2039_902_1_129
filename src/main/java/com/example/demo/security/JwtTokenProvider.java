@@ -13,21 +13,27 @@ public class JwtTokenProvider {
     private static final String SECRET =
             "MySuperSecretJwtKeyMySuperSecretJwtKey";
 
-    private static final long VALIDITY = 60 * 60 * 1000; 
-
+    private static final long VALIDITY = 60 * 60 * 1000;
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    public String generateToken(String email) {
+    public String generateToken(String email, String role, Long userId) {
 
         Date now = new Date();
         Date expiry = new Date(now.getTime() + VALIDITY);
 
         return Jwts.builder()
                 .setSubject(email)
+                
+                .claim("role", role)
+                .claim("userId", userId)
                 .setIssuedAt(now)
                 .setExpiration(expiry)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String generateToken(String email) {
+        return generateToken(email, "USER", 1L);
     }
 
     public String getUsernameFromToken(String token) {
@@ -39,7 +45,6 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-    
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
