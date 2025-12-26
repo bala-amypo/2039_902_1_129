@@ -1,27 +1,30 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
-import com.example.demo.service.impl.AuthServiceImpl;
+import com.example.demo.security.JwtTokenProvider;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthServiceImpl authService;
+    private final JwtTokenProvider tokenProvider;
 
-    public AuthController(AuthServiceImpl authService) {
-        this.authService = authService;
-    }
-
-    @PostMapping("/register")
-    public AuthResponse register(@RequestBody AuthRequest request) {
-        return authService.register(request);
+    public AuthController(JwtTokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest request) {
-        return authService.login(request);
+    public Map<String, String> login(@RequestBody Map<String, String> body) {
+
+        String email = body.get("email");
+
+        String token = tokenProvider.generateToken(email);
+
+        return Map.of(
+                "message", "LOGIN_SUCCESS",
+                "token", token
+        );
     }
 }
