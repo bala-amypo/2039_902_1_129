@@ -10,12 +10,10 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-   
     private static final String SECRET =
             "MySuperSecretJwtKeyMySuperSecretJwtKey";
 
-    
-    private static final long VALIDITY = 60 * 60 * 1000;
+    private static final long VALIDITY = 60 * 60 * 1000; 
 
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
@@ -30,12 +28,6 @@ public class JwtTokenProvider {
                 .setExpiration(expiry)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-    }
-
- 
-    public String generateToken(String email, String role, Long userId) {
-        
-        return generateToken(email);
     }
 
     public String getUsernameFromToken(String token) {
